@@ -31,7 +31,7 @@ class HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new TextField(
-                decoration: new InputDecoration(labelText: "Cantidad de vehículos"),
+                decoration: new InputDecoration(labelText: "Cantidad"),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   WhitelistingTextInputFormatter.digitsOnly
