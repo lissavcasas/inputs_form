@@ -1,44 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:multiple_select/Item.dart';
+import 'package:multiple_select/multi_filter_select.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new HomePage(),
-      theme: new ThemeData(primarySwatch: Colors.blue),
-    );
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return new HomePageState();
-  }
-}
+class _MyAppState extends State<MyApp> {
+  List<Item<num, String, String>> items = List.generate(
+    150,
+    (index) => Item.build(
+      value: index,
+      display: '$index display',
+      content: '$index content',
+      //content: '$index content' * (index + 1),
+    ),
+  );
 
-class HomePageState extends State<HomePage> {
+  //List<num> _initValue = [1, 2, 6];
+  List<num> _initValue = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: Colors.white,
-      body: new Container(
-          padding: const EdgeInsets.all(40.0),
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new TextField(
-                decoration: new InputDecoration(labelText: "Cantidad"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ], // Only numbers can be entered
-              ),
-            ],
-          )),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Multi Filter Select'),
+        ),
+        resizeToAvoidBottomPadding: false,
+        body: Center(
+            child: MultiFilterSelect(
+          placeholder: 'Selecciona una o más placas',
+          allItems: items,
+          initValue: _initValue,
+          selectCallback: (List selectedValue) => print(selectedValue.length),
+        )),
+      ),
     );
   }
 }
